@@ -1,0 +1,52 @@
+{
+  "name": "cypress-new-project",
+  "version": "0.0.0-SNAPSHOT",
+  "description": " This project is created to generate a Init Project of Cypress, to generate any new Cypress Project",
+  "main": "index.js",
+  "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:open-chrome": "cypress open --browser electron",
+    "cypress:run": "cypress run --env tags=@all --headless --browser electron",
+    "cypress:run_DEV": "cypress run --env tags=@all --spec 'cypress/e2e/features/DEV/*.feature' --headless --browser electron",
+    "cypress:run_STAGE": "cypress run --env tags=@all --spec 'cypress/e2e/features/STAGE/*.feature' --headless --browser electron",
+    "cypress:run-regression": "cypress run --env tags=@regression --headless --browser electron",
+    "cypress:run-smoke": "cypress run --env tags=@smoke --headless --browser electron",
+    "cypress:run-allure": "cypress run --env allure=true",
+    "allure:clear": "rm -r allure-results/ allure-report cypress/screenshots || true",
+    "allure:report": "allure generate allure-results --clean -o allure-report",
+    "allure:history": "mv -f allure-report/history allure-results/history && rm -r allure-report || true",
+    "docker:build": "export VERSION=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec) && docker build -t docker.tetralog-it.de/tetralog/ipro.selenium:$VERSION .",
+    "docker:run": "export VERSION=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec) && docker run -e CYPRESS_TAGS=$tag --name ipro.selenium docker.tetralog-it.de/tetralog/ipro.selenium:$VERSION --spec $FEATURE_FOLDER",
+    "docker:copy_report": "docker cp ipro.selenium:/cucumberproject/jsonlogs/ .",
+    "docker:remove-container": "docker rm ipro.selenium --force"
+  },
+  "keywords": [
+    "cypress",
+    "cypress-tags"
+  ],
+  "author": "Mario Rosano Arrebola",
+  "license": "ISC",
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^18.0.2",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
+    "@shelex/cypress-allure-plugin": "^2.34.0",
+    "cypress": "^12.13.0",
+    "cypress-each": "^1.13.3",
+    "cypress-file-upload": "^5.0.8",
+    "cypress-if": "^1.10.5",
+    "cypress-xpath": "^2.0.1",
+    "esbuild": "^0.17.19",
+    "fast-csv": "^4.3.6",
+    "javascript": "^1.0.0",
+    "multiple-cucumber-html-reporter": "^3.0.1"
+  },
+  "dependencies": {
+    "cypress-tags": "^1.1.2",
+    "fs": "^0.0.1-security",
+    "simple-xml-to-json": "^1.1.7",
+    "typescript": "^5.0.4",
+    "xml-js": "^1.6.11",
+    "xml-to-json-stream": "^1.1.0",
+    "xml2js": "^0.6.2"
+  }
+}
